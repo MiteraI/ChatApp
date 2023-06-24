@@ -4,8 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Server;
 
-namespace ChatRepository.Models
+namespace Server.Models
 {
     public class User
     {

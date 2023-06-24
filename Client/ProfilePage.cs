@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Server
+namespace Client
 {
-    public partial class ServerChat : Form
+    public partial class ProfilePage : Form
     {
-        public ServerChat()
+        public ProfilePage()
         {
             InitializeComponent();
         }
