@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Client.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -41,8 +43,6 @@ namespace Client
                 JsonObject loginUser = new JsonObject();
                 loginUser["Name"] = usernameTxb.Text.ToString();
                 loginUser["Password"] = passwordTxb.Text.ToString();
-                loginUser["Groups"] = new JsonArray();
-                loginUser["Messages"] = new JsonArray();
                 try
                 {
                     // Send a POST request to the API endpoint
@@ -52,6 +52,12 @@ namespace Client
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Login successful!");
+                        string json = await response.Content.ReadAsStringAsync();
+                        User user = JsonConvert.DeserializeObject<User>(json);
+                        SessionManager.loggedInUser = user;
+                        ChatRoomList roomList = new ChatRoomList();
+                        roomList.Show();
+                        this.Hide();
                     }
                     else
                     {

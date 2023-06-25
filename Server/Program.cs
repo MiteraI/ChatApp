@@ -23,6 +23,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapHub<ChatHub>("/chathub");

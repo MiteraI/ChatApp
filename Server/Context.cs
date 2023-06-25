@@ -33,11 +33,8 @@ namespace Server
                 user.Property(u => u.Name).IsRequired().HasMaxLength(128);
                 user.HasIndex(u => u.Name).IsUnique();
                 user.Property(u => u.Password).IsRequired().HasMaxLength(128);
-                user.HasMany(u => u.Messages)
-                    .WithOne(m => m.User).HasForeignKey(u => u.UserId);
-                user.HasMany(u => u.Groups)
-                    .WithOne(gm => gm.User).HasForeignKey(user => user.UserId);
             });
+
             modelBuilder.Entity<Conversation>(conversation =>
             {
                 conversation.HasKey(c => c.ConversationId);

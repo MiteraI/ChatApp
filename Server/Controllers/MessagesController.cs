@@ -50,6 +50,20 @@ namespace Server.Controllers
             return message;
         }
 
+        //GET messages from a particular conversation
+        [HttpGet("conversation/{conversationId}")]
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessageFromConversation(int conversationId)
+        {
+            if (_context.messages == null)
+            {
+                return NotFound();
+            }
+            var conversationMessages = await _context.messages.Where(m => m.ConversationId == conversationId)
+                    .Include(m => m.User).ToListAsync();
+            
+            return conversationMessages;
+        }
+
         // PUT: api/Messages/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

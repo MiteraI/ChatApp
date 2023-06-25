@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Models
+namespace Client.Models
 {
     public class Conversation
     {
-        public int ConversationId { get; set; }
+        public string Id { get; set; }
         public string Title { get; set; }
-        public ICollection<GroupMember>? Groups { get; set; }
-        public ICollection<Message>? Messages { get; set; }
     }
 }

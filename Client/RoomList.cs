@@ -6,7 +6,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -14,33 +13,29 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class SearchHub : Form
+    public partial class ChatRoomList : Form
     {
-
-        public SearchHub()
+        public ChatRoomList()
         {
             InitializeComponent();
+            usernameLabel.Text = SessionManager.loggedInUser.Name;
+            getRoomList();
         }
-
-        private async void searchTxtBox_TextChanged(object sender, EventArgs e)
+        private async void getRoomList()
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7276/api/Conversations/");
+                client.BaseAddress = new Uri("https://localhost:7276/api/Conversations");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                string searchName = searchTxtBox.Text.Trim();
-                string encodedSearchName = Uri.EscapeDataString(searchName); // URL-encode the search query
-                searchLinkLabel.Text = client.BaseAddress + encodedSearchName;
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync($"search?query={encodedSearchName}");
+                    HttpResponseMessage response = await client.GetAsync("");
 
                     if (response.IsSuccessStatusCode)
                     {
                         string jsonResponse = await response.Content.ReadAsStringAsync();
                         JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
-                        listViewRooms.Items.Clear();
+                        roomListView.Items.Clear();
 
                         // Process the retrieved users as needed
                         foreach (JsonObject conversation in conversations)
@@ -52,7 +47,7 @@ namespace Client
                             };
                             ListViewItem item = new ListViewItem(room.Id);
                             item.SubItems.Add(room.Title);
-                            listViewRooms.Items.Add(item);
+                            roomListView.Items.Add(item);
                         }
                     }
                     else
@@ -66,12 +61,27 @@ namespace Client
                 }
             }
         }
-
-        private void backToFriendListBtn_Click(object sender, EventArgs e)
+        private void searchChatRoomBtn_Click(object sender, EventArgs e)
         {
-            ChatRoomList friendList = new ChatRoomList();
-            friendList.Show();
+            SearchHub searchHub = new SearchHub();
+            searchHub.Show();
             this.Hide();
+        }
+
+        private void roomListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (roomListView.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = roomListView.SelectedItems[0];
+                Conversation conversation = new Conversation
+                {
+                    Id = selectedItem.SubItems[0].Text,
+                    Title = selectedItem.SubItems[1].Text
+                };
+                ChatRoom chatRoom = new ChatRoom(conversation);
+                chatRoom.Show();
+                this.Hide();
+            }
         }
     }
 }

@@ -50,6 +50,31 @@ namespace Server.Controllers
             return conversation;
         }
 
+        [HttpGet]
+        [Route("search")]
+        public async Task<ActionResult<IEnumerable<Conversation>>> SearchUsers(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return new List<Conversation>();
+            }
+
+            // Perform the search operation based on the provided query
+            // Here, you can implement your own logic to search for users
+
+            // For demonstration purposes, let's assume you have a list of users
+            List<Conversation> rooms = await _context.conversation.ToListAsync();
+            // Filter the users based on the search query
+            List<Conversation> matchingRooms = rooms.Where(u => u.Title.Contains(query)).ToList();
+
+            if (matchingRooms.Count == 0)
+            {
+                return new List<Conversation>();
+            }
+
+            return matchingRooms;
+        }
+
         // PUT: api/Conversations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -35,8 +35,6 @@ namespace Client
                 JsonObject newUser = new JsonObject();
                 newUser["Name"] = usernameTxb.Text.ToString();
                 newUser["Password"] = passwordTxb.Text.ToString();
-                newUser["Groups"] = new JsonArray();
-                newUser["Messages"] = new JsonArray();
                 try
                 {
                     // Send a POST request to the API endpoint

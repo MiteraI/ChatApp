@@ -50,6 +50,34 @@ namespace Server.Controllers
             return user;
         }
 
+        // GET: api/Users/search?query=John
+        [HttpGet]
+        [Route("search")]
+        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return new List<User>();
+            }
+
+            // Perform the search operation based on the provided query
+            // Here, you can implement your own logic to search for users
+
+            // For demonstration purposes, let's assume you have a list of users
+            List<User> users = await _context.users.ToListAsync();
+
+            // Filter the users based on the search query
+            List<User> matchingUsers = users.Where(u => u.Name.Contains(query)).ToList();
+
+            if (matchingUsers.Count == 0)
+            {
+                return new List<User>();
+            }
+
+            return matchingUsers;
+        }
+
+
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

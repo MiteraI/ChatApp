@@ -17,22 +17,25 @@ namespace Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<string> LoginUser(User userCredentials)
+        public IActionResult LoginUser(User userCredentials)
         {
-            User? user = _context.users.FirstOrDefault(u => u.Name == userCredentials.Name);
+            User user = _context.users.FirstOrDefault(u => u.Name == userCredentials.Name);
 
             if (user == null)
             {
-                return "Could not find user name";
+                return NotFound("Could not find user name");
             }
             else
             {
                 if (user.Password.Equals(userCredentials.Password))
                 {
-                    return "Logged In";
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest("Invalid password");
                 }
             }
-            return "";
         }
 
         [HttpPost("register")]
