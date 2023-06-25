@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Server;
+using Server.Hubs;
 using Server.Models;
 
 namespace Server.Controllers
@@ -15,10 +17,12 @@ namespace Server.Controllers
     public class MessagesController : ControllerBase
     {
         private readonly Context _context;
+        private readonly IHubContext<ChatHub> _hubcontext;
 
-        public MessagesController(Context context)
+        public MessagesController(Context context, IHubContext<ChatHub> hubContext)
         {
             _context = context;
+            _hubcontext = hubContext;
         }
 
         // GET: api/Messages
@@ -106,7 +110,10 @@ namespace Server.Controllers
           }
             _context.messages.Add(message);
             await _context.SaveChangesAsync();
-
+            User user = _context.users.Where(u => u.UserId == message.UserId).FirstOrDefault();
+            //Adding SignalR to handle real-time
+            //Message will send to all client, message is saved to database are 2 different action
+            await _hubcontext.Clients.Group(message.ConversationId.ToString()).SendAsync("ReceiveMessage", message.MessageContent, user.Name, message.DateTime.ToString());
             return CreatedAtAction("GetMessage", new { id = message.MessageId }, message);
         }
 

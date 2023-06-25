@@ -1,4 +1,5 @@
 ﻿using Client.Models;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,12 +19,14 @@ namespace Client
     public partial class ChatRoom : Form
     {
         Conversation _conversation;
+        HubConnection hubConnection;
         public ChatRoom(Conversation conversation)
         {
             InitializeComponent();
             _conversation = conversation;
             roomnameLabel.Text = conversation.Title;
             loadMessageFromDb();
+            openChatHub();
         }
 
         private async void sendBtn_Click(object sender, EventArgs e)
@@ -39,7 +42,7 @@ namespace Client
                 newMessage["messageContent"] = msgTxb.Text.Trim();
                 newMessage["conversationId"] = _conversation.Id;
                 newMessage["userId"] = SessionManager.loggedInUser.UserId;
-
+                msgTxb.Clear();
                 try
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync("", newMessage);
@@ -102,6 +105,7 @@ namespace Client
                             item.SubItems.Add(itemMessage.messageContent);
                             item.SubItems.Add(itemMessage.datetime.ToString());
                             chatListView.Items.Add(item);
+
                         }
                     }
                     else
@@ -113,6 +117,36 @@ namespace Client
                 {
                     msgStatusLabel.Text = "Error" + ex.Message;
                 }
+            }
+        }
+        private async void openChatHub()
+        {
+            try
+            {
+                //This will call the OnConnectAsync of the ChatHub
+                var hubConnection = new HubConnectionBuilder()
+                    .WithUrl("https://localhost:7276/chathub", options =>
+                    {
+                        options.Headers["room"] = _conversation.Id; // room / conversationId
+                    })
+                    .Build();
+
+                // Handle the "ReceiveMessage" event
+                hubConnection.On<string,string,string>("ReceiveMessage", (messageContent, username, datetime) =>
+                {  
+                    ListViewItem item = new ListViewItem(username);
+                    item.SubItems.Add(messageContent);
+                    item.SubItems.Add(datetime);
+                    chatListView.Items.Add(item);
+                });
+
+                // Start the connection
+                await hubConnection.StartAsync();
+
+            }
+            catch (Exception ex)
+            {
+                msgStatusLabel.Text += ex.Message;
             }
         }
     }
