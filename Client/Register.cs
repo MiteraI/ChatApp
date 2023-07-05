@@ -69,5 +69,10 @@ namespace Client
             login.Show();
             this.Hide();
         }
+
+        private void usernameTxb_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

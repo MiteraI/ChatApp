@@ -83,5 +83,12 @@ namespace Client
                 this.Hide();
             }
         }
+
+        private void btnUpdateProfile_Click(object sender, EventArgs e)
+        {
+            CreateProfile page = new CreateProfile();
+            this.Hide();
+            page.Show();
+        }
     }
 }

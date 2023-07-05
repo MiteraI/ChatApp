@@ -19,6 +19,8 @@ namespace Server.Models
         public ICollection<Message>? Messages { get; set; }
         [JsonIgnore]
         public ICollection<GroupMember>? Groups { get; set; }
+        [JsonIgnore]
+        public Profile? Profile { get; set; }
 
     }
 }

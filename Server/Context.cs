@@ -15,6 +15,7 @@ namespace Server
         public DbSet<Conversation> conversation { get; set; }
         public DbSet<Message> messages { get; set; }
         public DbSet<GroupMember> groups { get; set; }
+        public DbSet<Profile> profiles { get; set; }
         public Context(DbContextOptions<Context> options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,7 +39,7 @@ namespace Server
             modelBuilder.Entity<Conversation>(conversation =>
             {
                 conversation.HasKey(c => c.ConversationId);
-                conversation.Property(c => c.ConversationId).UseIdentityColumn(1,1);
+                conversation.Property(c => c.ConversationId).UseIdentityColumn(1, 1);
                 conversation.Property(c => c.Title).IsRequired().HasMaxLength(128);
                 conversation.HasMany(c => c.Messages)
                 .WithOne(m => m.Conversation).HasForeignKey(c => c.ConversationId);
@@ -65,6 +66,15 @@ namespace Server
                     .WithMany(c => c.Groups)
                     .HasForeignKey(gm => gm.ConversationId)
                     .IsRequired();
+            });
+            modelBuilder.Entity<Profile>(profile =>
+            {
+                profile.HasKey(p => p.Id);
+                profile.Property(p => p.Id).UseIdentityColumn(1, 1);
+                profile.Property(p => p.Introduction).HasMaxLength(256);
+                profile.HasOne(p => p.User)
+                .WithOne(u => u.Profile)
+                .HasForeignKey<Profile>(p => p.UserId);
             });
         }
     }

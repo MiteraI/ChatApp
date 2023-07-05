@@ -15,6 +15,27 @@ namespace Server.Controllers
         {
             _context = context;
         }
+        /*[HttpPost("login")]
+        public IActionResult LoginUser(string name, string password)
+        {
+            //User user = _context.users.FirstOrDefault(u => u.Name == userCredentials.Name);
+            User user = _context.users.FirstOrDefault(x =>  x.Name == name);
+            if (user == null)
+            {
+                return NotFound("Could not find user name");
+            }
+            else
+            {
+                if (user.Password.Equals(password))
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest("Invalid password");
+                }
+            }
+        }*/
 
         [HttpPost("login")]
         public IActionResult LoginUser(User userCredentials)

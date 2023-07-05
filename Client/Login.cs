@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Diagnostics;
 namespace Client
 {
     public partial class Login : Form
@@ -42,7 +42,8 @@ namespace Client
                 // Create a new User object with the registration data
                 JsonObject loginUser = new JsonObject();
                 loginUser["Name"] = usernameTxb.Text.ToString();
-                loginUser["Password"] = passwordTxb.Text.ToString();
+                loginUser["Password"] = passwordTxb.Text.ToString(); 
+                Debug.WriteLine(loginUser);
                 try
                 {
                     // Send a POST request to the API endpoint
