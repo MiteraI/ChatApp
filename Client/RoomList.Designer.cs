@@ -52,7 +52,7 @@
             // searchChatRoomBtn
             // 
             searchChatRoomBtn.Location = new Point(730, 184);
-            searchChatRoomBtn.Margin = new Padding(4, 4, 4, 4);
+            searchChatRoomBtn.Margin = new Padding(4);
             searchChatRoomBtn.Name = "searchChatRoomBtn";
             searchChatRoomBtn.Size = new Size(208, 61);
             searchChatRoomBtn.TabIndex = 2;
@@ -63,7 +63,7 @@
             // logoutBtn
             // 
             logoutBtn.Location = new Point(730, 74);
-            logoutBtn.Margin = new Padding(4, 4, 4, 4);
+            logoutBtn.Margin = new Padding(4);
             logoutBtn.Name = "logoutBtn";
             logoutBtn.Size = new Size(152, 52);
             logoutBtn.TabIndex = 3;
@@ -84,8 +84,9 @@
             // 
             // roomListView
             // 
+            roomListView.FullRowSelect = true;
             roomListView.Location = new Point(38, 74);
-            roomListView.Margin = new Padding(4, 4, 4, 4);
+            roomListView.Margin = new Padding(4);
             roomListView.Name = "roomListView";
             roomListView.Size = new Size(624, 270);
             roomListView.TabIndex = 5;
@@ -125,7 +126,7 @@
             Controls.Add(logoutBtn);
             Controls.Add(searchChatRoomBtn);
             Controls.Add(captionLabel);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "ChatRoomList";
             Text = "Chat Room List";
             ResumeLayout(false);

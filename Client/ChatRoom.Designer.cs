@@ -42,9 +42,10 @@
             captionLabel.AutoSize = true;
             captionLabel.BackColor = SystemColors.ActiveCaption;
             captionLabel.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
-            captionLabel.Location = new Point(41, 23);
+            captionLabel.Location = new Point(51, 29);
+            captionLabel.Margin = new Padding(4, 0, 4, 0);
             captionLabel.Name = "captionLabel";
-            captionLabel.Size = new Size(162, 31);
+            captionLabel.Size = new Size(198, 38);
             captionLabel.TabIndex = 0;
             captionLabel.Text = "Room's name: ";
             // 
@@ -53,36 +54,38 @@
             roomnameLabel.AutoSize = true;
             roomnameLabel.BackColor = SystemColors.ActiveCaption;
             roomnameLabel.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
-            roomnameLabel.Location = new Point(209, 23);
+            roomnameLabel.Location = new Point(261, 29);
+            roomnameLabel.Margin = new Padding(4, 0, 4, 0);
             roomnameLabel.Name = "roomnameLabel";
-            roomnameLabel.Size = new Size(76, 31);
+            roomnameLabel.Size = new Size(91, 38);
             roomnameLabel.TabIndex = 1;
             roomnameLabel.Text = "label2";
             // 
             // chatListView
             // 
-            chatListView.Location = new Point(40, 96);
+            chatListView.Location = new Point(50, 120);
+            chatListView.Margin = new Padding(4);
             chatListView.Name = "chatListView";
-            chatListView.Size = new Size(494, 220);
+            chatListView.Size = new Size(616, 274);
             chatListView.TabIndex = 2;
             chatListView.UseCompatibleStateImageBehavior = false;
             chatListView.View = View.Details;
-            chatListView.Columns.Add("Username", 100);
-            chatListView.Columns.Add("Content", 300);
-            chatListView.Columns.Add("Sent time", 100);
+            chatListView.SelectedIndexChanged += chatListView_SelectedIndexChanged;
             // 
             // msgTxb
             // 
-            msgTxb.Location = new Point(38, 356);
+            msgTxb.Location = new Point(48, 445);
+            msgTxb.Margin = new Padding(4);
             msgTxb.Name = "msgTxb";
-            msgTxb.Size = new Size(402, 27);
+            msgTxb.Size = new Size(502, 31);
             msgTxb.TabIndex = 3;
             // 
             // sendBtn
             // 
-            sendBtn.Location = new Point(575, 352);
+            sendBtn.Location = new Point(719, 440);
+            sendBtn.Margin = new Padding(4);
             sendBtn.Name = "sendBtn";
-            sendBtn.Size = new Size(93, 31);
+            sendBtn.Size = new Size(116, 39);
             sendBtn.TabIndex = 4;
             sendBtn.Text = "Send";
             sendBtn.UseVisualStyleBackColor = true;
@@ -90,9 +93,10 @@
             // 
             // button1
             // 
-            button1.Location = new Point(493, 23);
+            button1.Location = new Point(616, 29);
+            button1.Margin = new Padding(4);
             button1.Name = "button1";
-            button1.Size = new Size(175, 33);
+            button1.Size = new Size(219, 41);
             button1.TabIndex = 5;
             button1.Text = "Return to Room List";
             button1.UseVisualStyleBackColor = true;
@@ -102,17 +106,18 @@
             // 
             msgStatusLabel.AutoSize = true;
             msgStatusLabel.ForeColor = Color.Aqua;
-            msgStatusLabel.Location = new Point(261, 406);
+            msgStatusLabel.Location = new Point(326, 508);
+            msgStatusLabel.Margin = new Padding(4, 0, 4, 0);
             msgStatusLabel.Name = "msgStatusLabel";
-            msgStatusLabel.Size = new Size(77, 20);
+            msgStatusLabel.Size = new Size(95, 25);
             msgStatusLabel.TabIndex = 6;
             msgStatusLabel.Text = "MsgStatus";
             // 
             // ChatRoom
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(701, 450);
+            ClientSize = new Size(876, 562);
             Controls.Add(msgStatusLabel);
             Controls.Add(button1);
             Controls.Add(sendBtn);
@@ -120,6 +125,7 @@
             Controls.Add(chatListView);
             Controls.Add(roomnameLabel);
             Controls.Add(captionLabel);
+            Margin = new Padding(4);
             Name = "ChatRoom";
             Text = "ChatRoom";
             ResumeLayout(false);

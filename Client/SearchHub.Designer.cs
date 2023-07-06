@@ -34,13 +34,15 @@
             errorLabel = new Label();
             backToFriendListBtn = new Button();
             listViewRooms = new ListView();
+            btnAddRoom = new Button();
             SuspendLayout();
             // 
             // searchTxtBox
             // 
-            searchTxtBox.Location = new Point(313, 44);
+            searchTxtBox.Location = new Point(391, 55);
+            searchTxtBox.Margin = new Padding(4);
             searchTxtBox.Name = "searchTxtBox";
-            searchTxtBox.Size = new Size(352, 27);
+            searchTxtBox.Size = new Size(439, 31);
             searchTxtBox.TabIndex = 0;
             searchTxtBox.TextChanged += searchTxtBox_TextChanged;
             // 
@@ -48,9 +50,10 @@
             // 
             searchLabel.AutoSize = true;
             searchLabel.BackColor = SystemColors.ActiveCaption;
-            searchLabel.Location = new Point(112, 47);
+            searchLabel.Location = new Point(140, 59);
+            searchLabel.Margin = new Padding(4, 0, 4, 0);
             searchLabel.Name = "searchLabel";
-            searchLabel.Size = new Size(174, 20);
+            searchLabel.Size = new Size(212, 25);
             searchLabel.TabIndex = 1;
             searchLabel.Text = "Type to search for room: ";
             // 
@@ -58,25 +61,28 @@
             // 
             searchLinkLabel.AutoSize = true;
             searchLinkLabel.ForeColor = Color.Fuchsia;
-            searchLinkLabel.Location = new Point(154, 81);
+            searchLinkLabel.Location = new Point(192, 101);
+            searchLinkLabel.Margin = new Padding(4, 0, 4, 0);
             searchLinkLabel.Name = "searchLinkLabel";
-            searchLinkLabel.Size = new Size(0, 20);
+            searchLinkLabel.Size = new Size(0, 25);
             searchLinkLabel.TabIndex = 3;
             // 
             // errorLabel
             // 
             errorLabel.AutoSize = true;
             errorLabel.ForeColor = Color.Firebrick;
-            errorLabel.Location = new Point(293, 359);
+            errorLabel.Location = new Point(366, 449);
+            errorLabel.Margin = new Padding(4, 0, 4, 0);
             errorLabel.Name = "errorLabel";
-            errorLabel.Size = new Size(0, 20);
+            errorLabel.Size = new Size(0, 25);
             errorLabel.TabIndex = 4;
             // 
             // backToFriendListBtn
             // 
-            backToFriendListBtn.Location = new Point(509, 353);
+            backToFriendListBtn.Location = new Point(636, 441);
+            backToFriendListBtn.Margin = new Padding(4);
             backToFriendListBtn.Name = "backToFriendListBtn";
-            backToFriendListBtn.Size = new Size(152, 33);
+            backToFriendListBtn.Size = new Size(190, 41);
             backToFriendListBtn.TabIndex = 5;
             backToFriendListBtn.Text = "Go to friend list";
             backToFriendListBtn.UseVisualStyleBackColor = true;
@@ -84,26 +90,39 @@
             // 
             // listViewRooms
             // 
-            listViewRooms.Location = new Point(118, 104);
+            listViewRooms.FullRowSelect = true;
+            listViewRooms.Location = new Point(148, 130);
+            listViewRooms.Margin = new Padding(4);
             listViewRooms.Name = "listViewRooms";
-            listViewRooms.Size = new Size(544, 201);
+            listViewRooms.Size = new Size(679, 250);
             listViewRooms.TabIndex = 6;
             listViewRooms.UseCompatibleStateImageBehavior = false;
             listViewRooms.View = View.Details;
-            listViewRooms.Columns.Add("Id", 50);
-            listViewRooms.Columns.Add("Room's title", 150);
+            listViewRooms.SelectedIndexChanged += listViewRooms_SelectedIndexChanged;
+            // 
+            // btnAddRoom
+            // 
+            btnAddRoom.Location = new Point(148, 448);
+            btnAddRoom.Name = "btnAddRoom";
+            btnAddRoom.Size = new Size(192, 34);
+            btnAddRoom.TabIndex = 7;
+            btnAddRoom.Text = "Add room";
+            btnAddRoom.UseVisualStyleBackColor = true;
+            btnAddRoom.Click += btnAddRoom_Click;
             // 
             // SearchHub
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1000, 562);
+            Controls.Add(btnAddRoom);
             Controls.Add(listViewRooms);
             Controls.Add(backToFriendListBtn);
             Controls.Add(errorLabel);
             Controls.Add(searchLinkLabel);
             Controls.Add(searchLabel);
             Controls.Add(searchTxtBox);
+            Margin = new Padding(4);
             Name = "SearchHub";
             Text = "SearchHub";
             ResumeLayout(false);
@@ -118,5 +137,6 @@
         private Label errorLabel;
         private Button backToFriendListBtn;
         private ListView listViewRooms;
+        private Button btnAddRoom;
     }
 }

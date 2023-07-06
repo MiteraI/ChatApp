@@ -25,8 +25,13 @@ namespace Client
             InitializeComponent();
             _conversation = conversation;
             roomnameLabel.Text = conversation.Title;
+            chatListView.Columns.Add("username", 100);
+            chatListView.Columns.Add ("message", 100);
+            chatListView.Columns.Add("date", 100);
             loadMessageFromDb();
+            MessageBox.Show("yes load header");
             openChatHub();
+            //MessageBox.Show(hubConnection.ConnectionId);
         }
 
         private async void sendBtn_Click(object sender, EventArgs e)
@@ -105,8 +110,8 @@ namespace Client
                             item.SubItems.Add(itemMessage.messageContent);
                             item.SubItems.Add(itemMessage.datetime.ToString());
                             chatListView.Items.Add(item);
-
                         }
+
                     }
                     else
                     {
@@ -132,8 +137,8 @@ namespace Client
                     .Build();
 
                 // Handle the "ReceiveMessage" event
-                hubConnection.On<string,string,string>("ReceiveMessage", (messageContent, username, datetime) =>
-                {  
+                hubConnection.On<string, string, string>("ReceiveMessage", (messageContent, username, datetime) =>
+                {
                     ListViewItem item = new ListViewItem(username);
                     item.SubItems.Add(messageContent);
                     item.SubItems.Add(datetime);
@@ -148,6 +153,11 @@ namespace Client
             {
                 msgStatusLabel.Text += ex.Message;
             }
+        }
+
+        private void chatListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

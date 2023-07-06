@@ -20,10 +20,13 @@ namespace Client
             InitializeComponent();
             usernameLabel.Text = SessionManager.loggedInUser.Name;
             getRoomList();
+            roomListView.Columns.Add("id", 100);
+            roomListView.Columns.Add("title", 200);
+            roomListView.Columns.Add("button", 100);
         }
         private async void getRoomList()
         {
-            using (HttpClient client = new HttpClient())
+            /*using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7276/api/Conversations");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -47,6 +50,45 @@ namespace Client
                             };
                             ListViewItem item = new ListViewItem(room.Id);
                             item.SubItems.Add(room.Title);
+                            item.SubItems.Add("button");
+                            roomListView.Items.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        errorLabel.Text = "Error" + response.StatusCode.ToString();
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    errorLabel.Text = "Error" + ex.Message;
+                }
+            }*/
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"https://localhost:7276/api/GroupMember/{SessionManager.loggedInUser.UserId}");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
+                        roomListView.Items.Clear();
+
+                        // Process the retrieved users as needed
+                        foreach (JsonObject conversation in conversations)
+                        {
+                            Conversation room = new Conversation
+                            {
+                                Id = conversation["conversationId"].ToString(),
+                                Title = conversation["title"].ToString()
+                            };
+                            ListViewItem item = new ListViewItem(room.Id);
+                            item.SubItems.Add(room.Title);
+                            item.SubItems.Add("button");
                             roomListView.Items.Add(item);
                         }
                     }
@@ -78,9 +120,13 @@ namespace Client
                     Id = selectedItem.SubItems[0].Text,
                     Title = selectedItem.SubItems[1].Text
                 };
-                ChatRoom chatRoom = new ChatRoom(conversation);
-                chatRoom.Show();
+                //ChatRoom chatRoom = new ChatRoom(conversation);
+                //chatRoom.Show();
+
+                RoomPassword page = new RoomPassword(conversation);
+                page.Show();
                 this.Hide();
+
             }
         }
 
