@@ -34,6 +34,7 @@
             usernameLabel = new Label();
             roomListView = new ListView();
             errorLabel = new Label();
+            btnUpdateProfile = new Button();
             SuspendLayout();
             // 
             // captionLabel
@@ -41,17 +42,19 @@
             captionLabel.AutoSize = true;
             captionLabel.BackColor = SystemColors.ActiveCaption;
             captionLabel.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
-            captionLabel.Location = new Point(30, 9);
+            captionLabel.Location = new Point(38, 11);
+            captionLabel.Margin = new Padding(4, 0, 4, 0);
             captionLabel.Name = "captionLabel";
-            captionLabel.Size = new Size(174, 31);
+            captionLabel.Size = new Size(212, 38);
             captionLabel.TabIndex = 1;
             captionLabel.Text = "Your chat room:";
             // 
             // searchChatRoomBtn
             // 
-            searchChatRoomBtn.Location = new Point(584, 147);
+            searchChatRoomBtn.Location = new Point(730, 184);
+            searchChatRoomBtn.Margin = new Padding(4);
             searchChatRoomBtn.Name = "searchChatRoomBtn";
-            searchChatRoomBtn.Size = new Size(166, 49);
+            searchChatRoomBtn.Size = new Size(208, 61);
             searchChatRoomBtn.TabIndex = 2;
             searchChatRoomBtn.Text = "Seach for chat room";
             searchChatRoomBtn.UseVisualStyleBackColor = true;
@@ -59,56 +62,72 @@
             // 
             // logoutBtn
             // 
-            logoutBtn.Location = new Point(584, 59);
+            logoutBtn.Location = new Point(730, 88);
+            logoutBtn.Margin = new Padding(4);
             logoutBtn.Name = "logoutBtn";
-            logoutBtn.Size = new Size(122, 42);
+            logoutBtn.Size = new Size(208, 61);
             logoutBtn.TabIndex = 3;
             logoutBtn.Text = "Logout";
             logoutBtn.UseVisualStyleBackColor = true;
+            logoutBtn.Click += logoutBtn_Click;
             // 
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
             usernameLabel.BackColor = SystemColors.ActiveCaption;
             usernameLabel.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
-            usernameLabel.Location = new Point(223, 9);
+            usernameLabel.Location = new Point(279, 11);
+            usernameLabel.Margin = new Padding(4, 0, 4, 0);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(76, 31);
+            usernameLabel.Size = new Size(91, 38);
             usernameLabel.TabIndex = 4;
             usernameLabel.Text = "label1";
             // 
             // roomListView
             // 
-            roomListView.Location = new Point(30, 59);
+            roomListView.FullRowSelect = true;
+            roomListView.Location = new Point(38, 74);
+            roomListView.Margin = new Padding(4);
             roomListView.Name = "roomListView";
-            roomListView.Size = new Size(500, 217);
+            roomListView.Size = new Size(624, 270);
             roomListView.TabIndex = 5;
             roomListView.UseCompatibleStateImageBehavior = false;
             roomListView.View = View.Details;
-            roomListView.Columns.Add("Id", 100);
-            roomListView.Columns.Add("Room's name", 300);
             roomListView.SelectedIndexChanged += roomListView_SelectedIndexChanged;
             // 
             // errorLabel
             // 
             errorLabel.AutoSize = true;
-            errorLabel.Location = new Point(68, 298);
+            errorLabel.Location = new Point(85, 372);
+            errorLabel.Margin = new Padding(4, 0, 4, 0);
             errorLabel.Name = "errorLabel";
-            errorLabel.Size = new Size(50, 20);
+            errorLabel.Size = new Size(59, 25);
             errorLabel.TabIndex = 6;
             errorLabel.Text = "label1";
             // 
+            // btnUpdateProfile
+            // 
+            btnUpdateProfile.Location = new Point(730, 293);
+            btnUpdateProfile.Name = "btnUpdateProfile";
+            btnUpdateProfile.Size = new Size(208, 61);
+            btnUpdateProfile.TabIndex = 7;
+            btnUpdateProfile.Text = "update profile";
+            btnUpdateProfile.UseVisualStyleBackColor = true;
+            btnUpdateProfile.Click += btnUpdateProfile_Click;
+            // 
             // ChatRoomList
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 352);
+            ClientSize = new Size(1000, 440);
+            Controls.Add(btnUpdateProfile);
             Controls.Add(errorLabel);
             Controls.Add(roomListView);
             Controls.Add(usernameLabel);
             Controls.Add(logoutBtn);
             Controls.Add(searchChatRoomBtn);
             Controls.Add(captionLabel);
+            Margin = new Padding(4);
             Name = "ChatRoomList";
             Text = "Chat Room List";
             ResumeLayout(false);
@@ -122,5 +141,6 @@
         private Label usernameLabel;
         private ListView roomListView;
         private Label errorLabel;
+        private Button btnUpdateProfile;
     }
 }

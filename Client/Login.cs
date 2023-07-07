@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Diagnostics;
 namespace Client
 {
     public partial class Login : Form
@@ -20,6 +20,7 @@ namespace Client
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void registerBtn_Click(object sender, EventArgs e)
@@ -43,6 +44,7 @@ namespace Client
                 JsonObject loginUser = new JsonObject();
                 loginUser["Name"] = usernameTxb.Text.ToString();
                 loginUser["Password"] = passwordTxb.Text.ToString();
+                Debug.WriteLine(loginUser);
                 try
                 {
                     // Send a POST request to the API endpoint
@@ -71,6 +73,16 @@ namespace Client
 
                 }
             }
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

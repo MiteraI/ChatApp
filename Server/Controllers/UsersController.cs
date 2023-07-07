@@ -52,29 +52,39 @@ namespace Server.Controllers
 
         // GET: api/Users/search?query=John
         [HttpGet]
-        [Route("search")]
-        public async Task<ActionResult<IEnumerable<User>>> SearchUsers(string query)
+        [Route("search/{query}")]
+        public async Task<ActionResult<User>> SearchUsers(string query)
         {
             if (string.IsNullOrEmpty(query))
             {
-                return new List<User>();
+                //return new List<User>();
+                return BadRequest();
             }
 
             // Perform the search operation based on the provided query
             // Here, you can implement your own logic to search for users
 
             // For demonstration purposes, let's assume you have a list of users
+
             List<User> users = await _context.users.ToListAsync();
 
             // Filter the users based on the search query
-            List<User> matchingUsers = users.Where(u => u.Name.Contains(query)).ToList();
 
-            if (matchingUsers.Count == 0)
+            //List<User> matchingUsers = users.Where(u => u.Name.Contains(query)).ToList();
+            User getUser = users.Where(u => u.Name.Contains(query.Trim())).FirstOrDefault();
+            if (getUser is null)
             {
-                return new List<User>();
+                return NotFound();
             }
+            else {
+                return getUser;
+            }
+            //if (matchingUsers.Count == 0)
+            //{
+            //    return new List<User>();
+            //}
 
-            return matchingUsers;
+            //return matchingUsers;
         }
 
 
