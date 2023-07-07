@@ -20,6 +20,7 @@ namespace Client
         public Login()
         {
             InitializeComponent();
+
         }
 
         private void registerBtn_Click(object sender, EventArgs e)
@@ -42,7 +43,7 @@ namespace Client
                 // Create a new User object with the registration data
                 JsonObject loginUser = new JsonObject();
                 loginUser["Name"] = usernameTxb.Text.ToString();
-                loginUser["Password"] = passwordTxb.Text.ToString(); 
+                loginUser["Password"] = passwordTxb.Text.ToString();
                 Debug.WriteLine(loginUser);
                 try
                 {
@@ -72,6 +73,16 @@ namespace Client
 
                 }
             }
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

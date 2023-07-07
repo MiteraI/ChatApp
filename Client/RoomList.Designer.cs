@@ -62,13 +62,14 @@
             // 
             // logoutBtn
             // 
-            logoutBtn.Location = new Point(730, 74);
+            logoutBtn.Location = new Point(730, 88);
             logoutBtn.Margin = new Padding(4);
             logoutBtn.Name = "logoutBtn";
-            logoutBtn.Size = new Size(152, 52);
+            logoutBtn.Size = new Size(208, 61);
             logoutBtn.TabIndex = 3;
             logoutBtn.Text = "Logout";
             logoutBtn.UseVisualStyleBackColor = true;
+            logoutBtn.Click += logoutBtn_Click;
             // 
             // usernameLabel
             // 
@@ -106,11 +107,11 @@
             // 
             // btnUpdateProfile
             // 
-            btnUpdateProfile.Location = new Point(747, 308);
+            btnUpdateProfile.Location = new Point(730, 293);
             btnUpdateProfile.Name = "btnUpdateProfile";
-            btnUpdateProfile.Size = new Size(112, 34);
+            btnUpdateProfile.Size = new Size(208, 61);
             btnUpdateProfile.TabIndex = 7;
-            btnUpdateProfile.Text = "update";
+            btnUpdateProfile.Text = "update profile";
             btnUpdateProfile.UseVisualStyleBackColor = true;
             btnUpdateProfile.Click += btnUpdateProfile_Click;
             // 

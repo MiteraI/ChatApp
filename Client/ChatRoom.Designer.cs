@@ -63,6 +63,7 @@
             // 
             // chatListView
             // 
+            chatListView.FullRowSelect = true;
             chatListView.Location = new Point(50, 120);
             chatListView.Margin = new Padding(4);
             chatListView.Name = "chatListView";

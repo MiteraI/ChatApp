@@ -1,5 +1,6 @@
 ﻿using Client.Models;
 using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Message = Client.Models.Message;
+using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Client
 {
@@ -26,10 +29,9 @@ namespace Client
             _conversation = conversation;
             roomnameLabel.Text = conversation.Title;
             chatListView.Columns.Add("username", 100);
-            chatListView.Columns.Add ("message", 100);
+            chatListView.Columns.Add("message", 100);
             chatListView.Columns.Add("date", 100);
             loadMessageFromDb();
-            MessageBox.Show("yes load header");
             openChatHub();
             //MessageBox.Show(hubConnection.ConnectionId);
         }
@@ -158,6 +160,57 @@ namespace Client
         private void chatListView_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            if (chatListView.SelectedItems.Count <= 0)
+            {
+                //MessageBox.Show("chatListEmpty");
+                return;
+            }
+            else
+            {
+                ListViewItem selectedItem = chatListView.SelectedItems[0];
+                string getUsername = selectedItem.SubItems[0].Text.Trim();
+                string userId = GetUserId(getUsername.Trim());
+                Debug.WriteLine("pass getUserId");
+                ShowProfile page = new ShowProfile(userId,getUsername);
+                page.ShowDialog();
+                //page.Show();
+            }
+        }
+        private string GetUserId(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                // Set the base URL of your API server
+                client.BaseAddress = new Uri($"https://localhost:7276/api/Users/search/{username.Trim()}");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    HttpResponseMessage response = client.GetAsync("").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = response.Content.ReadAsStringAsync().Result;
+                        User user = JsonConvert.DeserializeObject<User>(responseBody);
+                        //JObject json = JObject.Parse(responseBody);
+                        //string getUserId = (string)json["userId"];
+                        //return getUserId;
+                        return user.UserId;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that occurred during the API request
+                    return null;
+                }
+            }
         }
     }
 }

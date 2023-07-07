@@ -19,14 +19,17 @@ namespace Client
         private Conversation Conversation;
         private ConversationPassword conversationPassword;
         private string conversationID;
-        public RoomPassword(Conversation conversation)
+        private ChatRoomList thePreviousRoom;
+        public RoomPassword(Conversation conversation, ChatRoomList previousRoom)
         {
             InitializeComponent();
+            this.thePreviousRoom = previousRoom;
             lblRoomTitle.Text = conversation.Title;
+            errorLabel.Visible = false;
             this.conversationID = conversation.Id;
             this.Conversation = conversation;
             getRoom();
-            
+
         }
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
@@ -39,14 +42,18 @@ namespace Client
             string input = txtPassword.Text.Trim();
             if (input.Equals(conversationPassword.password))
             {
-                MessageBox.Show("match");
-                Conversation conversationMatch = new Conversation { Id = conversationPassword.Id, Title = conversationPassword.Title};
+                //MessageBox.Show("match");
+                errorLabel.Visible = false;
+                Conversation conversationMatch = new Conversation { Id = conversationPassword.Id, Title = conversationPassword.Title };
                 ChatRoom chatRoom = new ChatRoom(this.Conversation);
                 this.Close();
                 chatRoom.Show();
             }
-            else {
-                MessageBox.Show("pwd unmatch");
+            else
+            {
+                errorLabel.Text = "pwd unmatch";
+                errorLabel.Visible = true;
+                //MessageBox.Show("pwd unmatch");
             }
         }
         private async void getRoom()
@@ -70,11 +77,12 @@ namespace Client
                         {
                             this.conversationPassword = conversation;
                         }
-                        else {
+                        else
+                        {
                             MessageBox.Show("conversation is null");
                         }
-                        
-                        
+
+
                         // Process the retrieved users as needed
 
                     }
@@ -84,7 +92,6 @@ namespace Client
 
                         errorLabel.Text = "Error" + response.StatusCode.ToString();
                     }
-                    MessageBox.Show("success"); 
                     if (conversationPassword.password is null)
                     {
                         ChatRoom chatRoom = new ChatRoom(this.Conversation);
@@ -98,6 +105,22 @@ namespace Client
                     errorLabel.Text = "Error" + ex.Message;
                 }
             }
+        }
+
+        private void errorLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            thePreviousRoom.Show();
+        }
+
+        private void RoomPassword_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

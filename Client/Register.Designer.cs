@@ -37,6 +37,8 @@
             errorLabel = new Label();
             loginBtn = new Button();
             label1 = new Label();
+            label2 = new Label();
+            lblError = new Label();
             SuspendLayout();
             // 
             // captionLabel
@@ -54,7 +56,7 @@
             // usernameTxb
             // 
             usernameTxb.Location = new Point(346, 191);
-            usernameTxb.Margin = new Padding(4, 4, 4, 4);
+            usernameTxb.Margin = new Padding(4);
             usernameTxb.Name = "usernameTxb";
             usernameTxb.Size = new Size(365, 31);
             usernameTxb.TabIndex = 1;
@@ -63,7 +65,7 @@
             // passwordTxb
             // 
             passwordTxb.Location = new Point(346, 278);
-            passwordTxb.Margin = new Padding(4, 4, 4, 4);
+            passwordTxb.Margin = new Padding(4);
             passwordTxb.Name = "passwordTxb";
             passwordTxb.Size = new Size(363, 31);
             passwordTxb.TabIndex = 2;
@@ -91,7 +93,7 @@
             // registerBtn
             // 
             registerBtn.Location = new Point(561, 375);
-            registerBtn.Margin = new Padding(4, 4, 4, 4);
+            registerBtn.Margin = new Padding(4);
             registerBtn.Name = "registerBtn";
             registerBtn.Size = new Size(222, 48);
             registerBtn.TabIndex = 5;
@@ -112,7 +114,7 @@
             // loginBtn
             // 
             loginBtn.Location = new Point(258, 375);
-            loginBtn.Margin = new Padding(4, 4, 4, 4);
+            loginBtn.Margin = new Padding(4);
             loginBtn.Name = "loginBtn";
             loginBtn.Size = new Size(222, 48);
             loginBtn.TabIndex = 16;
@@ -130,11 +132,33 @@
             label1.Size = new Size(0, 25);
             label1.TabIndex = 15;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(346, 470);
+            label2.Name = "label2";
+            label2.Size = new Size(324, 25);
+            label2.TabIndex = 17;
+            label2.Text = "you can update your profile when login";
+            // 
+            // lblError
+            // 
+            lblError.AutoSize = true;
+            lblError.ForeColor = Color.Red;
+            lblError.Location = new Point(472, 143);
+            lblError.Name = "lblError";
+            lblError.Size = new Size(50, 25);
+            lblError.TabIndex = 18;
+            lblError.Text = "error";
+            lblError.Click += lblError_Click;
+            // 
             // Register
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 562);
+            Controls.Add(lblError);
+            Controls.Add(label2);
             Controls.Add(loginBtn);
             Controls.Add(label1);
             Controls.Add(errorLabel);
@@ -144,7 +168,7 @@
             Controls.Add(passwordTxb);
             Controls.Add(usernameTxb);
             Controls.Add(captionLabel);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "Register";
             Text = "Register";
             ResumeLayout(false);
@@ -162,5 +186,7 @@
         private Label errorLabel;
         private Button loginBtn;
         private Label label1;
+        private Label label2;
+        private Label lblError;
     }
 }

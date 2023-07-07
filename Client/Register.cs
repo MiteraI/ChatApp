@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,32 +20,40 @@ namespace Client
         public Register()
         {
             InitializeComponent();
+            lblError.Visible = false;
         }
 
         private async void registerBtn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(usernameTxb.Text.ToString().Trim()) || string.IsNullOrEmpty(passwordTxb.Text.ToString().Trim()))
+            {
+                lblError.Text = "enter fall fields";
+                lblError.Visible = true;
+                //MessageBox.Show("enter all fields");
+                return;
+            }
             using (HttpClient client = new HttpClient())
             {
-                // Set the base URL of your API server
                 client.BaseAddress = new Uri("https://localhost:7276/api/register");
-
-                // Set the content type of the request body
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                // Create a new User object with the registration data
                 JsonObject newUser = new JsonObject();
                 newUser["Name"] = usernameTxb.Text.ToString();
                 newUser["Password"] = passwordTxb.Text.ToString();
                 try
                 {
-                    // Send a POST request to the API endpoint
                     HttpResponseMessage response = await client.PostAsJsonAsync("", newUser);
 
                     // Check the response status code
                     if (response.IsSuccessStatusCode)
                     {
                         // User registration successful
+                        
+                        string getResponse = await response.Content.ReadAsStringAsync();
+                        JObject getJsonBody = JObject.Parse(getResponse);
+                        string userId = (string)getJsonBody["userId"];
+                        lblError.Visible=false;
                         MessageBox.Show("Registration successful!");
+                        CreateProfile(userId, "");
                         Login login = new Login();
                         this.Hide();
                         login.Show();
@@ -52,13 +61,17 @@ namespace Client
                     else
                     {
                         // Error occurred during registration
-                        MessageBox.Show("Registration failed. Error: " + response.StatusCode);
+                        string errorMessage = await response.Content.ReadAsStringAsync();
+                        lblError.Text = errorMessage;
+                        lblError.Visible = true;
+                        //MessageBox.Show("Registration failed. Error: " + response.StatusCode+ " "+ response.RequestMessage);
                     }
                 }
                 catch (Exception ex)
                 {
                     // Handle any exceptions that occurred during the API request
-                    MessageBox.Show("An error occurred: " + ex.Message);
+                    lblError.Text = ex.Message;
+                    lblError.Visible = true;
                 }
             }
         }
@@ -71,6 +84,45 @@ namespace Client
         }
 
         private void usernameTxb_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void CreateProfile(string userId, string introduction)
+        {
+            Dictionary<string, string> fields = new Dictionary<string, string>
+                        {
+                            { "userId", userId },
+                            { "introduction", introduction },
+                        };
+
+            string requestBody = Newtonsoft.Json.JsonConvert.SerializeObject(fields);
+            var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri($"https://localhost:7276/api/Profile/create");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                try
+                {
+                    HttpResponseMessage response = client.PostAsync("", content).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("create profile success");
+                        string json = response.Content.ReadAsStringAsync().Result;
+                    }
+                    else
+                    {
+                        MessageBox.Show("cant create");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("exception in client");
+                }
+            }
+        }
+
+        private void lblError_Click(object sender, EventArgs e)
         {
 
         }

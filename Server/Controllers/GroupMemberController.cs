@@ -19,8 +19,11 @@ namespace Server.Controllers
         public async Task<ActionResult<IEnumerable<Conversation>>> SearchGroupThroughUserId(int userId)
         {
 
-            List<GroupMember> getGroup = await _context.groups.ToListAsync();
-            List<Conversation> rooms = await _context.conversation.ToListAsync();
+            List<GroupMember> getGroup = await _context.groups.Where(g => g.UserId == userId).ToListAsync();
+            if (getGroup.Count == 0) {
+                return new List<Conversation>();
+            }
+            List<Conversation> rooms =  _context.conversation.ToList();
             List<Conversation> matchingRooms = new List<Conversation>();
             foreach (GroupMember group in getGroup)
             {

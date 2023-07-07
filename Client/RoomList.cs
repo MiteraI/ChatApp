@@ -123,9 +123,9 @@ namespace Client
                 //ChatRoom chatRoom = new ChatRoom(conversation);
                 //chatRoom.Show();
 
-                RoomPassword page = new RoomPassword(conversation);
-                page.Show();
+                RoomPassword page = new RoomPassword(conversation,this);
                 this.Hide();
+                page.ShowDialog();
 
             }
         }
@@ -134,6 +134,14 @@ namespace Client
         {
             CreateProfile page = new CreateProfile();
             this.Hide();
+            page.Show();
+        }
+
+        private void logoutBtn_Click(object sender, EventArgs e)
+        {
+            SessionManager.loggedInUser = null;
+            Login page = new Login();
+            this.Close();
             page.Show();
         }
     }

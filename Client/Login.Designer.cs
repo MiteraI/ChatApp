@@ -36,22 +36,25 @@
             usernameTxb = new TextBox();
             captionLabel = new Label();
             loginBtn = new Button();
+            btnClose = new Button();
             SuspendLayout();
             // 
             // errorLabel
             // 
             errorLabel.AutoSize = true;
             errorLabel.ForeColor = Color.Red;
-            errorLabel.Location = new Point(283, 268);
+            errorLabel.Location = new Point(354, 335);
+            errorLabel.Margin = new Padding(4, 0, 4, 0);
             errorLabel.Name = "errorLabel";
-            errorLabel.Size = new Size(0, 20);
+            errorLabel.Size = new Size(0, 25);
             errorLabel.TabIndex = 13;
             // 
             // registerBtn
             // 
-            registerBtn.Location = new Point(473, 300);
+            registerBtn.Location = new Point(733, 372);
+            registerBtn.Margin = new Padding(4);
             registerBtn.Name = "registerBtn";
-            registerBtn.Size = new Size(178, 38);
+            registerBtn.Size = new Size(222, 48);
             registerBtn.TabIndex = 12;
             registerBtn.Text = "Go to Register";
             registerBtn.UseVisualStyleBackColor = true;
@@ -60,33 +63,37 @@
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
-            passwordLabel.Location = new Point(169, 224);
+            passwordLabel.Location = new Point(211, 280);
+            passwordLabel.Margin = new Padding(4, 0, 4, 0);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(70, 20);
+            passwordLabel.Size = new Size(87, 25);
             passwordLabel.TabIndex = 11;
             passwordLabel.Text = "Password";
             // 
             // usernameLabel
             // 
             usernameLabel.AutoSize = true;
-            usernameLabel.Location = new Point(164, 155);
+            usernameLabel.Location = new Point(205, 194);
+            usernameLabel.Margin = new Padding(4, 0, 4, 0);
             usernameLabel.Name = "usernameLabel";
-            usernameLabel.Size = new Size(75, 20);
+            usernameLabel.Size = new Size(91, 25);
             usernameLabel.TabIndex = 10;
             usernameLabel.Text = "Username";
             // 
             // passwordTxb
             // 
-            passwordTxb.Location = new Point(283, 221);
+            passwordTxb.Location = new Point(354, 276);
+            passwordTxb.Margin = new Padding(4);
             passwordTxb.Name = "passwordTxb";
-            passwordTxb.Size = new Size(291, 27);
+            passwordTxb.Size = new Size(363, 31);
             passwordTxb.TabIndex = 9;
             // 
             // usernameTxb
             // 
-            usernameTxb.Location = new Point(283, 152);
+            usernameTxb.Location = new Point(354, 190);
+            usernameTxb.Margin = new Padding(4);
             usernameTxb.Name = "usernameTxb";
-            usernameTxb.Size = new Size(293, 27);
+            usernameTxb.Size = new Size(365, 31);
             usernameTxb.TabIndex = 8;
             // 
             // captionLabel
@@ -94,27 +101,40 @@
             captionLabel.AutoSize = true;
             captionLabel.BackColor = SystemColors.ActiveCaption;
             captionLabel.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            captionLabel.Location = new Point(302, 46);
+            captionLabel.Location = new Point(378, 58);
+            captionLabel.Margin = new Padding(4, 0, 4, 0);
             captionLabel.Name = "captionLabel";
-            captionLabel.Size = new Size(243, 46);
+            captionLabel.Size = new Size(289, 54);
             captionLabel.TabIndex = 7;
             captionLabel.Text = "ChatApp Login";
             // 
             // loginBtn
             // 
-            loginBtn.Location = new Point(227, 300);
+            loginBtn.Location = new Point(402, 372);
+            loginBtn.Margin = new Padding(4);
             loginBtn.Name = "loginBtn";
-            loginBtn.Size = new Size(178, 38);
+            loginBtn.Size = new Size(222, 48);
             loginBtn.TabIndex = 14;
             loginBtn.Text = "Login";
             loginBtn.UseVisualStyleBackColor = true;
             loginBtn.Click += loginBtn_Click;
             // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(74, 372);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(222, 48);
+            btnClose.TabIndex = 15;
+            btnClose.Text = "close";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
+            // 
             // Login
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1000, 562);
+            Controls.Add(btnClose);
             Controls.Add(loginBtn);
             Controls.Add(errorLabel);
             Controls.Add(registerBtn);
@@ -123,8 +143,10 @@
             Controls.Add(passwordTxb);
             Controls.Add(usernameTxb);
             Controls.Add(captionLabel);
+            Margin = new Padding(4);
             Name = "Login";
             Text = "Login";
+            Load += Login_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -139,5 +161,6 @@
         private TextBox usernameTxb;
         private Label captionLabel;
         private Button loginBtn;
+        private Button btnClose;
     }
 }

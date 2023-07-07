@@ -48,7 +48,6 @@ namespace Client
                         string jsonResponse = await response.Content.ReadAsStringAsync();
                         JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
                         listViewRooms.Items.Clear();
-
                         // Process the retrieved users as needed
                         foreach (JsonObject conversation in conversations)
                         {
@@ -168,7 +167,7 @@ namespace Client
             }
             //MessageBox.Show(getAdded + listViewRooms.SelectedItems[0].SubItems[0].Text);
         }
-        private async void loadGroups()
+        private void loadGroups()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -176,12 +175,13 @@ namespace Client
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("");
+                    HttpResponseMessage response =  client.GetAsync("").Result;
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        string jsonResponse =  response.Content.ReadAsStringAsync().Result;
                         JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
+                        
 
                         // Process the retrieved users as needed
                         foreach (JsonObject conversation in conversations)
@@ -193,6 +193,7 @@ namespace Client
                             };
                             this.getConversationsToUser.Add(room);
                         }
+                        //MessageBox.Show(this.getConversationsToUser.Count.ToString());
                     }
                     else
                     {
@@ -206,7 +207,7 @@ namespace Client
             }
 
         }
-        private async void loadRoom()
+        private  void loadRoom()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -214,11 +215,11 @@ namespace Client
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync("");
+                    HttpResponseMessage response =  client.GetAsync("").Result;
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        string jsonResponse =  response.Content.ReadAsStringAsync().Result;
                         JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
                         listViewRooms.Items.Clear();
                         foreach (JsonObject conversation in conversations)
@@ -241,13 +242,15 @@ namespace Client
                             {
                                 item.SubItems.Add("private");
                             }
-                            if (this.getConversationsToUser.Contains(this.getConversationsToUser.Where(r => r.Id == room.Id).FirstOrDefault()))
+                            List<Conversation> count = this.getConversationsToUser.Where(r => r.Id.Trim().Equals(room.Id.Trim())).ToList();
+                            if (count.Count == 0)
                             {
-                                item.SubItems.Add("added");
+                                item.SubItems.Add("add");
+                                
                             }
                             else
                             {
-                                item.SubItems.Add("add");
+                                item.SubItems.Add("added");
                             }
                             listViewRooms.Items.Add(item);
 

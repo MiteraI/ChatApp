@@ -33,6 +33,7 @@
             lblRoomTitle = new Label();
             btnSend = new Button();
             errorLabel = new Label();
+            btnBack = new Button();
             SuspendLayout();
             // 
             // txtPassword
@@ -55,7 +56,7 @@
             // lblRoomTitle
             // 
             lblRoomTitle.AutoSize = true;
-            lblRoomTitle.Location = new Point(365, 39);
+            lblRoomTitle.Location = new Point(362, 49);
             lblRoomTitle.Name = "lblRoomTitle";
             lblRoomTitle.Size = new Size(52, 25);
             lblRoomTitle.TabIndex = 2;
@@ -63,7 +64,7 @@
             // 
             // btnSend
             // 
-            btnSend.Location = new Point(338, 252);
+            btnSend.Location = new Point(506, 275);
             btnSend.Name = "btnSend";
             btnSend.Size = new Size(112, 34);
             btnSend.TabIndex = 3;
@@ -74,17 +75,30 @@
             // errorLabel
             // 
             errorLabel.AutoSize = true;
+            errorLabel.ForeColor = Color.Red;
             errorLabel.Location = new Point(362, 90);
             errorLabel.Name = "errorLabel";
             errorLabel.Size = new Size(50, 25);
             errorLabel.TabIndex = 4;
             errorLabel.Text = "error";
+            errorLabel.Click += errorLabel_Click;
+            // 
+            // btnBack
+            // 
+            btnBack.Location = new Point(183, 275);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(112, 34);
+            btnBack.TabIndex = 5;
+            btnBack.Text = "back";
+            btnBack.UseVisualStyleBackColor = true;
+            btnBack.Click += btnBack_Click;
             // 
             // RoomPassword
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnBack);
             Controls.Add(errorLabel);
             Controls.Add(btnSend);
             Controls.Add(lblRoomTitle);
@@ -92,6 +106,7 @@
             Controls.Add(txtPassword);
             Name = "RoomPassword";
             Text = "RoomPassword";
+            Load += RoomPassword_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -103,5 +118,6 @@
         private Label lblRoomTitle;
         private Button btnSend;
         private Label errorLabel;
+        private Button btnBack;
     }
 }
