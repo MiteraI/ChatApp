@@ -98,12 +98,12 @@
             // errorLabel
             // 
             errorLabel.AutoSize = true;
-            errorLabel.Location = new Point(85, 372);
+            errorLabel.ForeColor = Color.Firebrick;
+            errorLabel.Location = new Point(47, 377);
             errorLabel.Margin = new Padding(4, 0, 4, 0);
             errorLabel.Name = "errorLabel";
-            errorLabel.Size = new Size(59, 25);
+            errorLabel.Size = new Size(0, 25);
             errorLabel.TabIndex = 6;
-            errorLabel.Text = "label1";
             // 
             // btnUpdateProfile
             // 
@@ -111,7 +111,7 @@
             btnUpdateProfile.Name = "btnUpdateProfile";
             btnUpdateProfile.Size = new Size(208, 61);
             btnUpdateProfile.TabIndex = 7;
-            btnUpdateProfile.Text = "update profile";
+            btnUpdateProfile.Text = "Update profile";
             btnUpdateProfile.UseVisualStyleBackColor = true;
             btnUpdateProfile.Click += btnUpdateProfile_Click;
             // 

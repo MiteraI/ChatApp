@@ -36,7 +36,6 @@
             usernameTxb = new TextBox();
             captionLabel = new Label();
             loginBtn = new Button();
-            btnClose = new Button();
             SuspendLayout();
             // 
             // errorLabel
@@ -51,7 +50,7 @@
             // 
             // registerBtn
             // 
-            registerBtn.Location = new Point(733, 372);
+            registerBtn.Location = new Point(571, 369);
             registerBtn.Margin = new Padding(4);
             registerBtn.Name = "registerBtn";
             registerBtn.Size = new Size(222, 48);
@@ -87,6 +86,7 @@
             passwordTxb.Name = "passwordTxb";
             passwordTxb.Size = new Size(363, 31);
             passwordTxb.TabIndex = 9;
+            passwordTxb.KeyDown += passwordTxb_KeyDown;
             // 
             // usernameTxb
             // 
@@ -101,7 +101,7 @@
             captionLabel.AutoSize = true;
             captionLabel.BackColor = SystemColors.ActiveCaption;
             captionLabel.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            captionLabel.Location = new Point(378, 58);
+            captionLabel.Location = new Point(396, 64);
             captionLabel.Margin = new Padding(4, 0, 4, 0);
             captionLabel.Name = "captionLabel";
             captionLabel.Size = new Size(289, 54);
@@ -110,7 +110,7 @@
             // 
             // loginBtn
             // 
-            loginBtn.Location = new Point(402, 372);
+            loginBtn.Location = new Point(240, 369);
             loginBtn.Margin = new Padding(4);
             loginBtn.Name = "loginBtn";
             loginBtn.Size = new Size(222, 48);
@@ -119,22 +119,11 @@
             loginBtn.UseVisualStyleBackColor = true;
             loginBtn.Click += loginBtn_Click;
             // 
-            // btnClose
-            // 
-            btnClose.Location = new Point(74, 372);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(222, 48);
-            btnClose.TabIndex = 15;
-            btnClose.Text = "close";
-            btnClose.UseVisualStyleBackColor = true;
-            btnClose.Click += btnClose_Click;
-            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 562);
-            Controls.Add(btnClose);
             Controls.Add(loginBtn);
             Controls.Add(errorLabel);
             Controls.Add(registerBtn);
@@ -146,7 +135,6 @@
             Margin = new Padding(4);
             Name = "Login";
             Text = "Login";
-            Load += Login_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -161,6 +149,5 @@
         private TextBox usernameTxb;
         private Label captionLabel;
         private Button loginBtn;
-        private Button btnClose;
     }
 }

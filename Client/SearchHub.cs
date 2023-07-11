@@ -21,10 +21,10 @@ namespace Client
         public SearchHub()
         {
             InitializeComponent();
-            listViewRooms.Columns.Add("id", 100);
-            listViewRooms.Columns.Add("title", 300);
-            listViewRooms.Columns.Add("stat", 200);
-            listViewRooms.Columns.Add("added?", 200);
+            listViewRooms.Columns.Add("Id", 100);
+            listViewRooms.Columns.Add("Room's name", 300);
+            listViewRooms.Columns.Add("Visibility", 200);
+            listViewRooms.Columns.Add("Join?", 200);
             loadGroups();
             loadRoom();
         }
@@ -51,15 +51,6 @@ namespace Client
                         // Process the retrieved users as needed
                         foreach (JsonObject conversation in conversations)
                         {
-                            /*Conversation room = new Conversation
-                            {
-                                Id = conversation["conversationId"].ToString(),
-                                Title = conversation["title"].ToString()
-                            };
-                            ListViewItem item = new ListViewItem(room.Id);
-                            item.SubItems.Add(room.Title);
-                            item.SubItems.Add("Join");
-                            listViewRooms.Items.Add(item);*/
                             ConversationPassword room = new ConversationPassword
                             {
                                 Id = conversation["conversationId"].ToString(),
@@ -71,19 +62,19 @@ namespace Client
                             //item.SubItems.Add("Join");
                             if (conversation["password"] is null || string.IsNullOrEmpty((string?)conversation["password"]))
                             {
-                                item.SubItems.Add("public");
+                                item.SubItems.Add("Public");
                             }
                             else
                             {
-                                item.SubItems.Add("private");
+                                item.SubItems.Add("Private");
                             }
                             if (this.getConversationsToUser.Contains(this.getConversationsToUser.Where(r => r.Id == room.Id).FirstOrDefault()))
                             {
-                                item.SubItems.Add("added");
+                                item.SubItems.Add("Added");
                             }
                             else
                             {
-                                item.SubItems.Add("add");
+                                item.SubItems.Add("Add");
                             }
                             listViewRooms.Items.Add(item);
 
@@ -112,22 +103,22 @@ namespace Client
         {
             if (listViewRooms.SelectedItems.Count <= 0)
             {
-                MessageBox.Show("no row has been selected yet");
+                MessageBox.Show("No row has been selected yet");
                 return;
             }
             string getAdded = listViewRooms.SelectedItems[0].SubItems[3].Text;
             string getRoomId = listViewRooms.SelectedItems[0].SubItems[0].Text;
-            if (getAdded.Equals("added".ToLower().Trim()))
+            if (getAdded.Equals("Added".ToLower().Trim()))
             {
-                MessageBox.Show("this has been in your groups");
+                MessageBox.Show("Room has already been added to you list");
                 return;
             }
-            DialogResult result = MessageBox.Show("are you sure want to add this room to your collection", "joinroom ", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Are you sure want to add this room to your collection", "Join room ", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 if (this.getConversationsToUser.Contains(this.getConversationsToUser.Where(r => r.Id == getRoomId).FirstOrDefault()))
                 {
-                    MessageBox.Show("your have added this room");
+                    MessageBox.Show("Room has already been added to you list");
                     return;
                 }
                 else
@@ -144,9 +135,16 @@ namespace Client
                             HttpResponseMessage response = await client.PostAsJsonAsync("", addGroup);
                             Debug.WriteLine(response.Content);
                             // Check the response status code
-                            if (response.IsSuccessStatusCode)
+                            if ((int)response.StatusCode == 200)
                             {
-                                MessageBox.Show("Add to your group success");
+                                MessageBox.Show("Added room to your group list");
+                            }
+                            else if ((int)response.StatusCode == 202)
+                            {
+                                MessageBox.Show("This is a private room, you will have to enter password to join", "Private Room", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Hide();
+                                RoomPassword roomPassword = new RoomPassword(getRoomId, SessionManager.loggedInUser.UserId);
+                                roomPassword.Show();
                             }
                             else
                             {
@@ -175,13 +173,13 @@ namespace Client
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response =  client.GetAsync("").Result;
+                    HttpResponseMessage response = client.GetAsync("").Result;
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string jsonResponse =  response.Content.ReadAsStringAsync().Result;
+                        string jsonResponse = response.Content.ReadAsStringAsync().Result;
                         JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
-                        
+
 
                         // Process the retrieved users as needed
                         foreach (JsonObject conversation in conversations)
@@ -207,7 +205,7 @@ namespace Client
             }
 
         }
-        private  void loadRoom()
+        private void loadRoom()
         {
             using (HttpClient client = new HttpClient())
             {
@@ -215,11 +213,11 @@ namespace Client
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response =  client.GetAsync("").Result;
+                    HttpResponseMessage response = client.GetAsync("").Result;
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string jsonResponse =  response.Content.ReadAsStringAsync().Result;
+                        string jsonResponse = response.Content.ReadAsStringAsync().Result;
                         JsonArray conversations = (JsonArray)JsonNode.Parse(jsonResponse);
                         listViewRooms.Items.Clear();
                         foreach (JsonObject conversation in conversations)
@@ -236,21 +234,20 @@ namespace Client
                             //item.SubItems.Add("Join");
                             if (conversation["password"] is null || string.IsNullOrEmpty((string?)conversation["password"]))
                             {
-                                item.SubItems.Add("public");
+                                item.SubItems.Add("Public");
                             }
                             else
                             {
-                                item.SubItems.Add("private");
+                                item.SubItems.Add("Private");
                             }
                             List<Conversation> count = this.getConversationsToUser.Where(r => r.Id.Trim().Equals(room.Id.Trim())).ToList();
                             if (count.Count == 0)
                             {
-                                item.SubItems.Add("add");
-                                
+                                item.SubItems.Add("Add");
                             }
                             else
                             {
-                                item.SubItems.Add("added");
+                                item.SubItems.Add("Added");
                             }
                             listViewRooms.Items.Add(item);
 

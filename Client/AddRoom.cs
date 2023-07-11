@@ -69,15 +69,16 @@ namespace Client
                     MessageBox.Show("status is invalid");
                     return;
             }
-            string getResult  = await  postConversationRoom(conversationPassword);
+            string getResult = await postConversationRoom(conversationPassword);
             if (string.IsNullOrEmpty(getResult))
             {
                 MessageBox.Show("erorr happen in adding rooms");
                 return;
             }
-            Groups group = new Groups { ConversationId = int.Parse(getResult.Trim()), UserId = int.Parse(this.getSessionUser.UserId.Trim())  };
-            Groups  getResultGroup = await postGroupMembers(group);
-            if (getResultGroup is null) {
+            Groups group = new Groups { ConversationId = int.Parse(getResult.Trim()), UserId = int.Parse(this.getSessionUser.UserId.Trim()) };
+            Groups getResultGroup = await postGroupMembers(group);
+            if (getResultGroup is null)
+            {
                 MessageBox.Show("Error happen in saving groups");
                 return;
             }
@@ -158,7 +159,7 @@ namespace Client
                         JObject jsonObject = JObject.Parse(getResponse);
                         string conversationId = (string)jsonObject["conversationId"];
                         string userId = (string)jsonObject["userId"];
-                        Groups group = new Groups { ConversationId =  int.Parse(conversationId), UserId = int.Parse(userId )};
+                        Groups group = new Groups { ConversationId = int.Parse(conversationId), UserId = int.Parse(userId) };
                         MessageBox.Show("Add group success");
                         //int parsedId = int.Parse(conversationId.Trim());
                         return group;

@@ -17,21 +17,21 @@ using System.Windows.Forms;
 
 namespace Client
 {
-    public partial class CreateProfile : Form
+    public partial class UpdateProfile : Form
     {
         private User getUser;
         private Profile getProfile;
-        public CreateProfile()
+        public UpdateProfile()
         {
             InitializeComponent();
             this.getUser = SessionManager.loggedInUser;
-             bool result = GetProfileByUserId(int.Parse(getUser.UserId));
+            bool result = GetProfileByUserId(int.Parse(getUser.UserId));
         }
-        public CreateProfile(User user)
+        public UpdateProfile(User user)
         {
             InitializeComponent();
             bool result = GetProfileByUserId(int.Parse(user.UserId));
-          
+
         }
 
         private void rtxtIntroduction_TextChanged(object sender, EventArgs e)
@@ -56,10 +56,12 @@ namespace Client
                         ChatRoomList roomList = new ChatRoomList();
                         roomList.Show();
                         this.Hide();
-                    } else if (response.StatusCode == System.Net.HttpStatusCode.NotFound) {
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
                         MessageBox.Show("not found profile for this account, new one will be created");
                         getIntroduction = "";
-                        CreateProfileIfNotFound(getUser.UserId,getIntroduction);
+                        CreateProfileIfNotFound(getUser.UserId, getIntroduction);
                     }
                     else
                     {
@@ -82,12 +84,12 @@ namespace Client
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response =  client.GetAsync("").Result;
+                    HttpResponseMessage response = client.GetAsync("").Result;
                     if (response.IsSuccessStatusCode)
                     {
-                        string json =  response.Content.ReadAsStringAsync().Result;
-                        JObject jsonObject= JObject.Parse(json);
-                        string introduction = (string) jsonObject["introduction"];
+                        string json = response.Content.ReadAsStringAsync().Result;
+                        JObject jsonObject = JObject.Parse(json);
+                        string introduction = (string)jsonObject["introduction"];
                         rtxtIntroduction.Text = introduction.Trim();
                         return true;
                     }
@@ -109,7 +111,8 @@ namespace Client
 
         private async void btnBack_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(rtxtIntroduction.Text.Trim())) {
+            if (string.IsNullOrEmpty(rtxtIntroduction.Text.Trim()))
+            {
                 MessageBox.Show("introduction must not be empty ");
                 return;
             }
@@ -117,7 +120,7 @@ namespace Client
             this.Close();
             page.Show();
         }
-        private  void CreateProfileIfNotFound(string userId, string introduction)
+        private void CreateProfileIfNotFound(string userId, string introduction)
         {
             string getIntroduction = rtxtIntroduction.Text.ToString();
             Dictionary<string, string> fields = new Dictionary<string, string>
@@ -135,11 +138,11 @@ namespace Client
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
-                    HttpResponseMessage response =  client.PostAsync("", content).Result;
+                    HttpResponseMessage response = client.PostAsync("", content).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("create profile success");
-                        string json =  response.Content.ReadAsStringAsync().Result;
+                        string json = response.Content.ReadAsStringAsync().Result;
                     }
                     else
                     {

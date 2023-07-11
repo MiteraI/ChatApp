@@ -1,6 +1,6 @@
 ﻿namespace Client
 {
-    partial class CreateProfile
+    partial class UpdateProfile
     {
         /// <summary>
         /// Required designer variable.
@@ -39,9 +39,9 @@
             lblintroduction.AutoSize = true;
             lblintroduction.Location = new Point(77, 70);
             lblintroduction.Name = "lblintroduction";
-            lblintroduction.Size = new Size(109, 25);
+            lblintroduction.Size = new Size(110, 25);
             lblintroduction.TabIndex = 0;
-            lblintroduction.Text = "introduction";
+            lblintroduction.Text = "Introduction";
             // 
             // rtxtIntroduction
             // 
@@ -54,25 +54,25 @@
             // 
             // btnBack
             // 
-            btnBack.Location = new Point(134, 348);
+            btnBack.Location = new Point(129, 270);
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(112, 34);
             btnBack.TabIndex = 4;
-            btnBack.Text = "back";
+            btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(559, 348);
+            btnSave.Location = new Point(554, 270);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(112, 34);
             btnSave.TabIndex = 5;
-            btnSave.Text = "save";
+            btnSave.Text = "Save";
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
-            // CreateProfile
+            // UpdateProfile
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -81,8 +81,8 @@
             Controls.Add(btnBack);
             Controls.Add(rtxtIntroduction);
             Controls.Add(lblintroduction);
-            Name = "CreateProfile";
-            Text = "CreateProfile";
+            Name = "UpdateProfile";
+            Text = "Update Profile";
             ResumeLayout(false);
             PerformLayout();
         }

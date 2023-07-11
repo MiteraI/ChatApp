@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -16,20 +17,16 @@ namespace Client
 {
     public partial class RoomPassword : Form
     {
-        private Conversation Conversation;
+        private string conversationId;
+        private string userId;
         private ConversationPassword conversationPassword;
-        private string conversationID;
-        private ChatRoomList thePreviousRoom;
-        public RoomPassword(Conversation conversation, ChatRoomList previousRoom)
+        public RoomPassword(string conversationId, string userId)
         {
             InitializeComponent();
-            this.thePreviousRoom = previousRoom;
-            lblRoomTitle.Text = conversation.Title;
+            this.conversationId = conversationId;
+            this.userId = userId;
             errorLabel.Visible = false;
-            this.conversationID = conversation.Id;
-            this.Conversation = conversation;
             getRoom();
-
         }
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
@@ -37,21 +34,44 @@ namespace Client
 
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        private async void btnSend_Click(object sender, EventArgs e)
         {
+            btnSend.Enabled = false;
             string input = txtPassword.Text.Trim();
             if (input.Equals(conversationPassword.password))
             {
-                //MessageBox.Show("match");
                 errorLabel.Visible = false;
-                Conversation conversationMatch = new Conversation { Id = conversationPassword.Id, Title = conversationPassword.Title };
-                ChatRoom chatRoom = new ChatRoom(this.Conversation);
-                this.Close();
-                chatRoom.Show();
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri($"https://localhost:7276/api/GroupMember/private");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    try
+                    {
+                        JsonObject addGroup = new JsonObject();
+                        addGroup["ConversationId"] = conversationId;
+                        addGroup["UserId"] = SessionManager.loggedInUser.UserId;
+                        HttpResponseMessage response = await client.PostAsJsonAsync("", addGroup);
+                        if (response.IsSuccessStatusCode) 
+                        {
+                            this.Hide();
+                            ChatRoomList chatRoomList = new ChatRoomList();
+                            chatRoomList.Show();
+                        } else
+                        {
+                            MessageBox.Show("Server problem", "Server problem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            btnSend.Enabled = true;
+                        }
+
+                    } catch (Exception ex)
+                    {
+                        errorLabel.Text = ex.Message;
+                        btnSend.Enabled = true;
+                    }
+                }
             }
             else
             {
-                errorLabel.Text = "pwd unmatch";
+                errorLabel.Text = "Incorrect password";
                 errorLabel.Visible = true;
                 //MessageBox.Show("pwd unmatch");
             }
@@ -60,7 +80,7 @@ namespace Client
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri($"https://localhost:7276/api/Conversations/{conversationID}");
+                client.BaseAddress = new Uri($"https://localhost:7276/api/Conversations/{conversationId}");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
@@ -79,12 +99,8 @@ namespace Client
                         }
                         else
                         {
-                            MessageBox.Show("conversation is null");
+                            MessageBox.Show("Conversation is null");
                         }
-
-
-                        // Process the retrieved users as needed
-
                     }
                     else
                     {
@@ -92,13 +108,7 @@ namespace Client
 
                         errorLabel.Text = "Error" + response.StatusCode.ToString();
                     }
-                    if (conversationPassword.password is null)
-                    {
-                        ChatRoom chatRoom = new ChatRoom(this.Conversation);
-                        this.Close();
-                        chatRoom.Show();
-                    }
-
+                   
                 }
                 catch (HttpRequestException ex)
                 {
@@ -107,20 +117,11 @@ namespace Client
             }
         }
 
-        private void errorLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnBack_Click(object sender, EventArgs e)
         {
             this.Close();
-            thePreviousRoom.Show();
-        }
-
-        private void RoomPassword_Load(object sender, EventArgs e)
-        {
-
+            ChatRoomList chatRoomList = new ChatRoomList();
+            chatRoomList.Show();
         }
     }
 }

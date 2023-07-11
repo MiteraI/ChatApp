@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using Message = Client.Models.Message;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Client
 {
@@ -28,9 +29,8 @@ namespace Client
             InitializeComponent();
             _conversation = conversation;
             roomnameLabel.Text = conversation.Title;
-            chatListView.Columns.Add("username", 100);
-            chatListView.Columns.Add("message", 100);
-            chatListView.Columns.Add("date", 100);
+            chatListView.Columns.Add("Message", 600);
+            chatListView.Columns.Add("Time", 250);
             loadMessageFromDb();
             openChatHub();
             //MessageBox.Show(hubConnection.ConnectionId);
@@ -58,6 +58,7 @@ namespace Client
                     if (response.IsSuccessStatusCode)
                     {
                         msgStatusLabel.Text = "Message success: " + response.StatusCode;
+                        chatListView.TopItem = chatListView.Items[chatListView.Items.Count - 1];
                     }
                     else
                     {
@@ -108,8 +109,7 @@ namespace Client
                                 UserId = message["userId"].ToString(),
                                 ConversationId = message["conversationId"].ToString()
                             };
-                            ListViewItem item = new ListViewItem(itemMessage.Username);
-                            item.SubItems.Add(itemMessage.messageContent);
+                            ListViewItem item = new ListViewItem(itemMessage.Username + ": " + itemMessage.messageContent);
                             item.SubItems.Add(itemMessage.datetime.ToString());
                             chatListView.Items.Add(item);
                         }
@@ -141,8 +141,7 @@ namespace Client
                 // Handle the "ReceiveMessage" event
                 hubConnection.On<string, string, string>("ReceiveMessage", (messageContent, username, datetime) =>
                 {
-                    ListViewItem item = new ListViewItem(username);
-                    item.SubItems.Add(messageContent);
+                    ListViewItem item = new ListViewItem(username + ": " + messageContent);
                     item.SubItems.Add(datetime);
                     chatListView.Items.Add(item);
                 });
@@ -171,7 +170,7 @@ namespace Client
                 string getUsername = selectedItem.SubItems[0].Text.Trim();
                 string userId = GetUserId(getUsername.Trim());
                 Debug.WriteLine("pass getUserId");
-                ShowProfile page = new ShowProfile(userId,getUsername);
+                ShowProfile page = new ShowProfile(userId, getUsername);
                 page.ShowDialog();
                 //page.Show();
             }
@@ -210,6 +209,14 @@ namespace Client
                     // Handle any exceptions that occurred during the API request
                     return null;
                 }
+            }
+        }
+
+        private void msgTxb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                sendBtn_Click(sender, e);
             }
         }
     }

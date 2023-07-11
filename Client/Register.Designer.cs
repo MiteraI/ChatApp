@@ -147,9 +147,8 @@
             lblError.ForeColor = Color.Red;
             lblError.Location = new Point(472, 143);
             lblError.Name = "lblError";
-            lblError.Size = new Size(50, 25);
+            lblError.Size = new Size(0, 25);
             lblError.TabIndex = 18;
-            lblError.Text = "error";
             lblError.Click += lblError_Click;
             // 
             // Register

@@ -84,7 +84,7 @@
             backToFriendListBtn.Name = "backToFriendListBtn";
             backToFriendListBtn.Size = new Size(190, 41);
             backToFriendListBtn.TabIndex = 5;
-            backToFriendListBtn.Text = "Go to friend list";
+            backToFriendListBtn.Text = "Go to your chat list";
             backToFriendListBtn.UseVisualStyleBackColor = true;
             backToFriendListBtn.Click += backToFriendListBtn_Click;
             // 
@@ -94,7 +94,7 @@
             listViewRooms.Location = new Point(148, 130);
             listViewRooms.Margin = new Padding(4);
             listViewRooms.Name = "listViewRooms";
-            listViewRooms.Size = new Size(679, 250);
+            listViewRooms.Size = new Size(679, 282);
             listViewRooms.TabIndex = 6;
             listViewRooms.UseCompatibleStateImageBehavior = false;
             listViewRooms.View = View.Details;
@@ -106,7 +106,7 @@
             btnAddRoom.Name = "btnAddRoom";
             btnAddRoom.Size = new Size(192, 34);
             btnAddRoom.TabIndex = 7;
-            btnAddRoom.Text = "Add room";
+            btnAddRoom.Text = "Create room";
             btnAddRoom.UseVisualStyleBackColor = true;
             btnAddRoom.Click += btnAddRoom_Click;
             // 

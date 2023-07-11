@@ -71,11 +71,11 @@
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(343, 358);
+            btnClose.Location = new Point(353, 337);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(112, 34);
             btnClose.TabIndex = 4;
-            btnClose.Text = "close";
+            btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = true;
             btnClose.Click += btnClose_Click;
             // 

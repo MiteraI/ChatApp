@@ -63,17 +63,17 @@
             groupBoxStat.Size = new Size(696, 150);
             groupBoxStat.TabIndex = 2;
             groupBoxStat.TabStop = false;
-            groupBoxStat.Text = "status";
+            groupBoxStat.Text = "Visibility";
             // 
             // radioPrivate
             // 
             radioPrivate.AutoSize = true;
             radioPrivate.Location = new Point(0, 112);
             radioPrivate.Name = "radioPrivate";
-            radioPrivate.Size = new Size(91, 29);
+            radioPrivate.Size = new Size(90, 29);
             radioPrivate.TabIndex = 1;
             radioPrivate.TabStop = true;
-            radioPrivate.Text = "private";
+            radioPrivate.Text = "Private";
             radioPrivate.UseVisualStyleBackColor = true;
             // 
             // radioPublic
@@ -81,10 +81,10 @@
             radioPublic.AutoSize = true;
             radioPublic.Location = new Point(0, 67);
             radioPublic.Name = "radioPublic";
-            radioPublic.Size = new Size(85, 29);
+            radioPublic.Size = new Size(84, 29);
             radioPublic.TabIndex = 0;
             radioPublic.TabStop = true;
-            radioPublic.Text = "public";
+            radioPublic.Text = "Public";
             radioPublic.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -92,9 +92,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(75, 58);
             label1.Name = "label1";
-            label1.Size = new Size(41, 25);
+            label1.Size = new Size(125, 25);
             label1.TabIndex = 3;
-            label1.Text = "title";
+            label1.Text = "Room's name:";
             // 
             // btnSave
             // 
@@ -102,7 +102,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(112, 34);
             btnSave.TabIndex = 4;
-            btnSave.Text = "save";
+            btnSave.Text = "Create";
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
@@ -112,7 +112,7 @@
             btnBack.Name = "btnBack";
             btnBack.Size = new Size(112, 34);
             btnBack.TabIndex = 5;
-            btnBack.Text = "back";
+            btnBack.Text = "Back";
             btnBack.UseVisualStyleBackColor = true;
             btnBack.Click += btnBack_Click;
             // 
@@ -127,7 +127,7 @@
             Controls.Add(groupBoxStat);
             Controls.Add(txtTitle);
             Name = "AddRoom";
-            Text = "AddRoom";
+            Text = "Create Room";
             groupBoxStat.ResumeLayout(false);
             groupBoxStat.PerformLayout();
             ResumeLayout(false);

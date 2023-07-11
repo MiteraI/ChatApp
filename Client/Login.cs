@@ -32,6 +32,7 @@ namespace Client
 
         private async void loginBtn_Click(object sender, EventArgs e)
         {
+            loginBtn.Enabled = false;
             using (HttpClient client = new HttpClient())
             {
                 // Set the base URL of your API server
@@ -64,25 +65,25 @@ namespace Client
                     else
                     {
                         errorLabel.Text = "Login failed. Error: " + response.StatusCode.ToString();
+                        loginBtn.Enabled = true;
                     }
                 }
                 catch (Exception ex)
                 {
                     // Handle any exceptions that occurred during the API request
                     errorLabel.Text = "Login failed. Error: " + ex.Message;
+                    loginBtn.Enabled = true;
 
                 }
             }
         }
 
-        private void Login_Load(object sender, EventArgs e)
+        private void passwordTxb_KeyDown(object sender, KeyEventArgs e)
         {
-
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginBtn_Click(sender, e);
+            }
         }
     }
 }

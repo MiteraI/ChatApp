@@ -25,11 +25,12 @@ namespace Client
 
         private async void registerBtn_Click(object sender, EventArgs e)
         {
+            registerBtn.Enabled = false;
             if (string.IsNullOrEmpty(usernameTxb.Text.ToString().Trim()) || string.IsNullOrEmpty(passwordTxb.Text.ToString().Trim()))
             {
-                lblError.Text = "enter fall fields";
+                lblError.Text = "Enter all fields";
                 lblError.Visible = true;
-                //MessageBox.Show("enter all fields");
+                registerBtn.Enabled = true;
                 return;
             }
             using (HttpClient client = new HttpClient())
@@ -47,11 +48,11 @@ namespace Client
                     if (response.IsSuccessStatusCode)
                     {
                         // User registration successful
-                        
+
                         string getResponse = await response.Content.ReadAsStringAsync();
                         JObject getJsonBody = JObject.Parse(getResponse);
                         string userId = (string)getJsonBody["userId"];
-                        lblError.Visible=false;
+                        lblError.Visible = false;
                         MessageBox.Show("Registration successful!");
                         CreateProfile(userId, "");
                         Login login = new Login();
@@ -64,7 +65,7 @@ namespace Client
                         string errorMessage = await response.Content.ReadAsStringAsync();
                         lblError.Text = errorMessage;
                         lblError.Visible = true;
-                        //MessageBox.Show("Registration failed. Error: " + response.StatusCode+ " "+ response.RequestMessage);
+                        registerBtn.Enabled = true;
                     }
                 }
                 catch (Exception ex)

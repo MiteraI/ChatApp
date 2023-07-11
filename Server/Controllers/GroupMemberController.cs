@@ -47,14 +47,28 @@ namespace Server.Controllers
         {
             if (_context.conversation == null)
             {
-                return Problem("Entity set 'Context.conversation'  is null.");
+                return StatusCode(500, "Entity set 'Context.conversation' is null.");
             }
-            //GroupMember group = new GroupMember
-            //{
-            //    UserId = user.UserId,
-            //    ConversationId = conversation.ConversationId
-            //};
+            Conversation conversation = _context.conversation.
+                Where(conversation => conversation.ConversationId == group.ConversationId).FirstOrDefault();
+            if (!(conversation.Password == null))
+            {
+                return StatusCode(202, "Room is private, You will have to insert password");
+            }
+            _context.groups.Add(group);
+            await _context.SaveChangesAsync();
 
+            return group;
+        }
+
+        [HttpPost("private")]
+        public async Task<ActionResult<GroupMember>> InsertGroupWithPassword(GroupMember group)
+        {
+            if (_context.conversation == null)
+            {
+                return StatusCode(500, "Entity set 'Context.conversation' is null.");
+            }
+            
             _context.groups.Add(group);
             await _context.SaveChangesAsync();
 

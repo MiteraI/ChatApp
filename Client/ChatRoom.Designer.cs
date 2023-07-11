@@ -64,10 +64,10 @@
             // chatListView
             // 
             chatListView.FullRowSelect = true;
-            chatListView.Location = new Point(50, 120);
+            chatListView.Location = new Point(50, 93);
             chatListView.Margin = new Padding(4);
             chatListView.Name = "chatListView";
-            chatListView.Size = new Size(616, 274);
+            chatListView.Size = new Size(828, 365);
             chatListView.TabIndex = 2;
             chatListView.UseCompatibleStateImageBehavior = false;
             chatListView.View = View.Details;
@@ -75,15 +75,16 @@
             // 
             // msgTxb
             // 
-            msgTxb.Location = new Point(48, 445);
+            msgTxb.Location = new Point(51, 481);
             msgTxb.Margin = new Padding(4);
             msgTxb.Name = "msgTxb";
-            msgTxb.Size = new Size(502, 31);
+            msgTxb.Size = new Size(631, 31);
             msgTxb.TabIndex = 3;
+            msgTxb.KeyDown += msgTxb_KeyDown;
             // 
             // sendBtn
             // 
-            sendBtn.Location = new Point(719, 440);
+            sendBtn.Location = new Point(762, 477);
             sendBtn.Margin = new Padding(4);
             sendBtn.Name = "sendBtn";
             sendBtn.Size = new Size(116, 39);
@@ -94,7 +95,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(616, 29);
+            button1.Location = new Point(659, 29);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Size = new Size(219, 41);
@@ -107,7 +108,7 @@
             // 
             msgStatusLabel.AutoSize = true;
             msgStatusLabel.ForeColor = Color.Aqua;
-            msgStatusLabel.Location = new Point(326, 508);
+            msgStatusLabel.Location = new Point(50, 531);
             msgStatusLabel.Margin = new Padding(4, 0, 4, 0);
             msgStatusLabel.Name = "msgStatusLabel";
             msgStatusLabel.Size = new Size(95, 25);
@@ -118,7 +119,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(876, 562);
+            ClientSize = new Size(924, 588);
             Controls.Add(msgStatusLabel);
             Controls.Add(button1);
             Controls.Add(sendBtn);
