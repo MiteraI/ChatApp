@@ -19,17 +19,15 @@ namespace Client
 {
     public partial class ShowProfile : Form
     {
-        private string userId;
+        private string username;
         private string Introduction;
-        private string textboxUsername;
-        public ShowProfile(string userid, string username)
+        public ShowProfile(string username)
         {
             InitializeComponent();
-            this.userId = userid;
-            this.textboxUsername = username;
-            richTextBox1.Enabled = false;
+            this.username = username;
+            richTextBox1.ReadOnly = true;
             txtUsername.Enabled = false;
-            bool getResult = GetProfile(userid);
+            bool getResult = GetProfile(username);
             if (getResult)
             {
 
@@ -45,12 +43,12 @@ namespace Client
         {
             this.Close();
         }
-        private bool GetProfile(string userId)
+        private bool GetProfile(string username)
         {
             using (HttpClient client = new HttpClient())
             {
                 // Set the base URL of your API server
-                client.BaseAddress = new Uri($"https://localhost:7276/api/Profile/get/{userId}");
+                client.BaseAddress = new Uri($"https://localhost:7276/api/Profile/get/{username}");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 try
@@ -63,7 +61,7 @@ namespace Client
                         string getIntroduction = (string)json["introduction"];
                         string getProfileId = (string)json["id"];
                         richTextBox1.Text = getIntroduction.Trim();
-                        txtUsername.Text = textboxUsername;
+                        txtUsername.Text = username;
                         return true;
                     }
                     else

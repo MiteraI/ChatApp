@@ -38,42 +38,47 @@
             // lblUsername
             // 
             lblUsername.AutoSize = true;
-            lblUsername.Location = new Point(77, 51);
+            lblUsername.Location = new Point(54, 31);
+            lblUsername.Margin = new Padding(2, 0, 2, 0);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(91, 25);
+            lblUsername.Size = new Size(60, 15);
             lblUsername.TabIndex = 0;
             lblUsername.Text = "Username";
             // 
             // lblIntroduction
             // 
             lblIntroduction.AutoSize = true;
-            lblIntroduction.Location = new Point(77, 141);
+            lblIntroduction.Location = new Point(54, 85);
+            lblIntroduction.Margin = new Padding(2, 0, 2, 0);
             lblIntroduction.Name = "lblIntroduction";
-            lblIntroduction.Size = new Size(110, 25);
+            lblIntroduction.Size = new Size(73, 15);
             lblIntroduction.TabIndex = 1;
             lblIntroduction.Text = "Introduction";
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(208, 138);
+            richTextBox1.Location = new Point(146, 83);
+            richTextBox1.Margin = new Padding(2, 2, 2, 2);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(545, 144);
+            richTextBox1.Size = new Size(383, 88);
             richTextBox1.TabIndex = 2;
             richTextBox1.Text = "";
             richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(213, 55);
+            txtUsername.Location = new Point(149, 33);
+            txtUsername.Margin = new Padding(2, 2, 2, 2);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(540, 31);
+            txtUsername.Size = new Size(379, 23);
             txtUsername.TabIndex = 3;
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(353, 337);
+            btnClose.Location = new Point(247, 202);
+            btnClose.Margin = new Padding(2, 2, 2, 2);
             btnClose.Name = "btnClose";
-            btnClose.Size = new Size(112, 34);
+            btnClose.Size = new Size(78, 20);
             btnClose.TabIndex = 4;
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = true;
@@ -81,16 +86,17 @@
             // 
             // ShowProfile
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(560, 270);
             Controls.Add(btnClose);
             Controls.Add(txtUsername);
             Controls.Add(richTextBox1);
             Controls.Add(lblIntroduction);
             Controls.Add(lblUsername);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "ShowProfile";
-            Text = "ShowProfile";
+            Text = "User Profile";
             Load += ShowProfile_Load;
             ResumeLayout(false);
             PerformLayout();

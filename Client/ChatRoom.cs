@@ -167,10 +167,9 @@ namespace Client
             else
             {
                 ListViewItem selectedItem = chatListView.SelectedItems[0];
-                string getUsername = selectedItem.SubItems[0].Text.Trim();
-                string userId = GetUserId(getUsername.Trim());
+                string getUsername = selectedItem.SubItems[0].Text.Trim().Split(":")[0];
                 Debug.WriteLine("pass getUserId");
-                ShowProfile page = new ShowProfile(userId, getUsername);
+                ShowProfile page = new ShowProfile(getUsername);
                 page.ShowDialog();
                 //page.Show();
             }

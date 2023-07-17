@@ -45,14 +45,14 @@ namespace Server.Controllers
             
             
         }
-        [HttpGet("get/{userId}")]
-        public async Task<ActionResult<Profile>> GetProfileByUser(int userId)
+        [HttpGet("get/{username}")]
+        public async Task<ActionResult<Profile>> GetProfileByUser(string username)
         {
             if (_context == null)
             {
                 return Problem("Entity set 'Context.messages'  is null.");
             }
-            Profile getProfile = await _context.profiles.Where(p => p.UserId == userId).FirstOrDefaultAsync();
+            Profile getProfile = await _context.profiles.Where(p => p.User.Name == username).FirstOrDefaultAsync();
             return Ok(getProfile);
         }
 
